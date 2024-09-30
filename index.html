@@ -3,39 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>3D Animation mit Three.js</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <title>3D Box</title>
+  <style>
+    .container {
+      perspective: 1000px;
+    }
+    .box {
+      width: 200px;
+      height: 200px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(45deg) rotateY(45deg);
+      animation: rotate 5s infinite linear;
+    }
+    .box div {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 100, 100, 0.8);
+      border: 1px solid #000;
+    }
+    .front {
+      transform: translateZ(100px);
+    }
+    .back {
+      transform: rotateY(180deg) translateZ(100px);
+    }
+    @keyframes rotate {
+      from {
+        transform: rotateX(0deg) rotateY(0deg);
+      }
+      to {
+        transform: rotateX(360deg) rotateY(360deg);
+      }
+    }
+  </style>
 </head>
 <body>
-  <script>
-    // Szene erstellen
-    const scene = new THREE.Scene();
-
-    // Kamera hinzufügen
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 5;
-
-    // Renderer einrichten
-    const renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-
-    // Würfel erstellen
-    const geometry = new THREE.BoxGeometry();
-    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
-
-    // Animation
-    function animate() {
-      requestAnimationFrame(animate);
-      cube.rotation.x += 0.01;
-      cube.rotation.y += 0.01;
-      renderer.render(scene, camera);
-    }
-
-    animate();
-  </script>
+  <div class="container">
+    <div class="box">
+      <div class="front">Front</div>
+      <div class="back">Back</div>
+    </div>
+  </div>
 </body>
 </html>
 
